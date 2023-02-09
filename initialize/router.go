@@ -9,7 +9,10 @@ package initialize
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"time"
 	"yzgin/global"
+	"yzgin/model/common/response"
+	"yzgin/router"
 )
 
 // 初始化总路由
@@ -17,13 +20,22 @@ import (
 func Routers() *gin.Engine {
 	Router := gin.Default()
 
+	systemRouter := router.RouterGroupApp.System
 	// 方便统一添加路由组前缀 多服务器上线使用
-	PublicGroup := Router.Group("")
+	PublicGroup := Router.Group("/api")
 	{
 		// 健康监测
-		PublicGroup.GET("/health", func(c *gin.Context) {
-			c.JSON(http.StatusOK, "ok")
+		PublicGroup.GET("/ping", func(c *gin.Context) {
+			c.JSON(http.StatusOK, "pong")
 		})
+
+		// 获取系统时间
+		PublicGroup.GET("/getCurrentTimes", func(c *gin.Context) {
+			now := time.Now().Local().Unix()
+			response.OkWithDetailed(now, "查询成功", c)
+		})
+
+		systemRouter.InitPublicRouter(PublicGroup)
 	}
 
 	global.Log.Info("router register success")
