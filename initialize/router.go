@@ -33,7 +33,7 @@ func Routers() *gin.Engine {
 	{
 		// 健康监测
 		PublicGroup.GET("/ping", func(c *gin.Context) {
-			c.JSON(http.StatusOK, "pong")
+			c.String(http.StatusOK, "pong")
 		})
 
 		// 获取系统时间
