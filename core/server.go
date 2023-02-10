@@ -8,20 +8,18 @@ package core
 
 import (
 	"fmt"
-	"go.uber.org/zap"
 	"time"
 	"yzgin/global"
-	"yzgin/initialize"
+
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 )
 
 type server interface {
 	ListenAndServe() error
 }
 
-func RunWindowsServer() {
-	Router := initialize.Routers()
-	Router.Static("/form-generator", "./resource/page")
-
+func RunWindowsServer(Router *gin.Engine) {
 	address := fmt.Sprintf(":%d", global.Config.System.Addr)
 	s := initServer(address, Router)
 	// 保证文本顺序输出

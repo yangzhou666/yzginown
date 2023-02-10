@@ -4,20 +4,27 @@
 *@email: yangzhou2224@shengtian.com
 *@description:
  */
-package global
+package model
 
 import (
 	"bytes"
 	"database/sql/driver"
 	"errors"
 	"fmt"
-	"gorm.io/gorm"
 	"log"
 	"strings"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type BaseModel struct {
+	Id        uint      `gorm:"PRIMARY_KEY;AUTO_INCREMENT" json:"id"`
+	CreatedAt LocalTime `json:"created_at,omitempty"`
+	UpdatedAt LocalTime `json:"updated_at,omitempty"`
+}
+
+type SoftDeleteModel struct {
 	Id        uint           `gorm:"PRIMARY_KEY;AUTO_INCREMENT" json:"id"`
 	CreatedAt LocalTime      `json:"created_at,omitempty"`
 	UpdatedAt LocalTime      `json:"updated_at,omitempty"`
