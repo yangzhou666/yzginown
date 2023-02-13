@@ -4,7 +4,7 @@
 *@email: yangzhou2224@shengtian.com
 *@description:
  */
-package initialize
+package redis
 
 import (
 	"context"

@@ -7,11 +7,12 @@
 package initialize
 
 import (
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 	"yzgin/config"
 	"yzgin/global"
-	"yzgin/initialize/internal"
+	"yzgin/pkg/db/initialize/internal"
+
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 // GormMysql 初始化Mysql数据库

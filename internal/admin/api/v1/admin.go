@@ -26,9 +26,21 @@ func (r *Route) CreateAdmin(c *gin.Context) {
 		return
 	}
 
-	if store.Verify(req.CaptchaId, req.Captcha, true) {
+	oriPassword, err := req.CheckPassword(req.Password, r.conf.System.AesKey, r.conf.System.AesIv)
+	if err != nil {
+		response.ValidatorFail(err.Error(), c)
 		return
 	}
 
-	response.FailWithMessage("验证码错误", c)
+	//if !store.Verify(req.CaptchaId, req.Captcha, true) {
+	//	response.FailWithMessage("验证码错误", c)
+	//	return
+	//}
+
+	if err = r.svc.CreateAdmin(c, req.UserName, oriPassword); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	response.OkWithMessage("创建成功", c)
 }

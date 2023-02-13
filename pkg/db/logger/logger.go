@@ -4,12 +4,13 @@
 *@email: yangzhou2224@shengtian.com
 *@description:
  */
-package internal
+package logger
 
 import (
 	"fmt"
-	"gorm.io/gorm/logger"
 	"yzgin/global"
+
+	"gorm.io/gorm/logger"
 )
 
 type writer struct {

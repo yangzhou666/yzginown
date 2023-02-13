@@ -7,7 +7,10 @@
 package v1
 
 import (
+	"yzgin/global"
 	"yzgin/internal/admin/service"
+
+	"go.uber.org/zap"
 
 	"yzgin/config"
 )
@@ -15,11 +18,13 @@ import (
 type Route struct {
 	svc  *service.Service
 	conf *config.Server
+	log  *zap.Logger
 }
 
 func New(c *config.Server, s *service.Service) *Route {
 	return &Route{
 		conf: c,
 		svc:  s,
+		log:  global.Log,
 	}
 }

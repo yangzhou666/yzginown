@@ -7,11 +7,12 @@
 package initialize
 
 import (
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 	"yzgin/config"
 	"yzgin/global"
-	"yzgin/initialize/internal"
+	"yzgin/pkg/db/initialize/internal"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 // GormPgSql 初始化 Postgresql 数据库

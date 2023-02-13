@@ -7,13 +7,15 @@
 package internal
 
 import (
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
-	"gorm.io/gorm/schema"
 	"log"
 	"os"
 	"time"
 	"yzgin/global"
+	logger2 "yzgin/pkg/db/logger"
+
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 )
 
 type DBBASE interface {
@@ -40,7 +42,7 @@ func (g *_gorm) Config(prefix string, singular bool) *gorm.Config {
 			return time.Now().Local()
 		},
 	}
-	_default := logger.New(NewWriter(log.New(os.Stdout, "\r\n", log.LstdFlags)), logger.Config{
+	_default := logger.New(logger2.NewWriter(log.New(os.Stdout, "\r\n", log.LstdFlags)), logger.Config{
 		SlowThreshold: 200 * time.Millisecond,
 		LogLevel:      logger.Warn,
 		Colorful:      true,

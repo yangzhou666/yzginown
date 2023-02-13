@@ -9,4 +9,6 @@ type System struct {
 	UseRedis      bool   `mapstructure:"use-redis" json:"use-redis" yaml:"use-redis"`                // 使用redis
 	LimitCountIP  int    `mapstructure:"iplimit-count" json:"iplimit-count" yaml:"iplimit-count"`
 	LimitTimeIP   int    `mapstructure:"iplimit-time" json:"iplimit-time" yaml:"iplimit-time"`
+	AesKey        string `mapstructure:"aes-key" json:"aes-key" yaml:"aes-key"`
+	AesIv         string `mapstructure:"aes-iv" json:"aes-iv" yaml:"aes-iv"`
 }

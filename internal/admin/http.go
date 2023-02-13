@@ -27,7 +27,8 @@ func Init(routerEngine *gin.Engine) *service.Service {
 	adminRouterGroup.Use(middleware.Cors())
 	{
 		systemRouterGroup := adminRouterGroup.Group("system")
-		systemRouterGroup.GET("captcha", r.Captcha) //获取系统验证码
+		systemRouterGroup.GET("captcha", r.Captcha)    //获取系统验证码
+		systemRouterGroup.GET("info", r.GetServerInfo) //获取系统信息
 
 		userRouterGroup := adminRouterGroup.Group("user")
 		{

@@ -12,6 +12,8 @@ system:
   iplimit-count: 15000
   #  IP限制一个小时
   iplimit-time: 3600
+  aes-key: "+mRzhxCAsxvo6CE="
+  aes-iv: "X04GH9UDMHQ+9So="
 
 # captcha configuration
 captcha:

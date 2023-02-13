@@ -19,6 +19,7 @@ import (
 type Service struct {
 	c   *config.Server
 	dao *dao.Dao
+	log *zap.Logger
 }
 
 var (
@@ -36,6 +37,7 @@ func New(c *config.Server) (s *Service) {
 	svc = &Service{
 		c:   c,
 		dao: db,
+		log: global.Log,
 	}
 
 	return svc

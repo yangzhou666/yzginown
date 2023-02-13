@@ -10,30 +10,34 @@ import (
 	"context"
 	"time"
 	"yzgin/config"
-	"yzgin/initialize"
+	"yzgin/global"
 	"yzgin/internal/admin/migrate"
+	db2 "yzgin/pkg/db"
+	initialize2 "yzgin/pkg/db/initialize"
+	redis2 "yzgin/pkg/redis"
+
+	"go.uber.org/zap"
 
 	jsoniter "github.com/json-iterator/go"
-
-	"github.com/go-redis/redis/v8"
-	"gorm.io/gorm"
 )
 
 // Dao dao
 type Dao struct {
 	c      *config.Server
-	DBCli  *gorm.DB
-	RDSCli *redis.Client
+	DBCli  *db2.DB
+	RDSCli *redis2.Client
 	expire int32
+	log    *zap.Logger
 }
 
 // New init db.
 func New(c *config.Server) *Dao {
 	d := &Dao{
 		c:      c,
-		DBCli:  initialize.GormMysqlByConfig(c.Mysql),
-		RDSCli: initialize.Redis(),
+		DBCli:  initialize2.GormMysqlByConfig(c.Mysql),
+		RDSCli: redis2.Redis(),
 		expire: int32(time.Duration(2*time.Minute) / time.Second),
+		log:    global.Log,
 	}
 
 	if d.DBCli == nil {
@@ -66,11 +70,11 @@ func (d *Dao) Ping(ctx context.Context) (err error) {
 // get 从redis中读取指定值，使用json的反序列化方式
 func (d *Dao) getCache(key string, value interface{}) error {
 	bytes, err := d.RDSCli.Get(context.TODO(), key).Bytes()
-	if err != nil && err != redis.Nil {
+	if err != nil && err != redis2.Nil {
 		return err
 	}
 
-	if err != redis.Nil && len(bytes) > 0 {
+	if err != redis2.Nil && len(bytes) > 0 {
 		err = jsoniter.Unmarshal(bytes, value)
 		if err != nil {
 			return err
